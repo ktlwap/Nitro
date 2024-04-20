@@ -95,6 +95,9 @@ public class TokenizerTests
         Assert.That(result.Count, Is.EqualTo(3));
         Assert.That(result[0].Type, Is.EqualTo(TokenType.DocTypeTag));
         Assert.That(result[0].Value, Is.EqualTo("<!DOCTYPE html>"));
+        Assert.That(result[0].Attributes, Has.Count.EqualTo(1));
+        Assert.That(result[0].Attributes[0].Type, Is.EqualTo(AttributeType.Html));
+        Assert.That(result[0].Attributes[0].Value, Is.Null);
         
         Assert.That(result[1].Type, Is.EqualTo(TokenType.OpeningHtmlTag));
         Assert.That(result[1].Value, Is.EqualTo("<html lang=\"en\">"));
@@ -104,5 +107,50 @@ public class TokenizerTests
         
         Assert.That(result[2].Type, Is.EqualTo(TokenType.ClosingHtmlTag));
         Assert.That(result[2].Value, Is.EqualTo("</html>"));
+    }
+    
+    [Test]
+    public void ComplexHtml()
+    {
+        string source = """
+                        <!DOCTYPE html>
+                        <html lang = "en">
+                        </head>
+                        <body>
+                        
+                        < /body>
+                        </ html>
+                        """;
+
+        List<Token> result = Tokenizer.Execute(source.ToArray());
+        
+        Assert.That(result.Count, Is.EqualTo(11));
+        Assert.That(result[0].Type, Is.EqualTo(TokenType.DocTypeTag));
+        Assert.That(result[0].Value, Is.EqualTo("<!DOCTYPE html>"));
+        
+        Assert.That(result[1].Type, Is.EqualTo(TokenType.WhitespaceSequence));
+        
+        Assert.That(result[2].Type, Is.EqualTo(TokenType.OpeningHtmlTag));
+        Assert.That(result[2].Value, Is.EqualTo("<html lang=\"en\">"));
+        
+        Assert.That(result[3].Type, Is.EqualTo(TokenType.WhitespaceSequence));
+        
+        Assert.That(result[4].Type, Is.EqualTo(TokenType.ClosingHeadTag));
+        Assert.That(result[4].Value, Is.EqualTo("</head>"));
+        
+        Assert.That(result[5].Type, Is.EqualTo(TokenType.WhitespaceSequence));
+        
+        Assert.That(result[6].Type, Is.EqualTo(TokenType.OpeningBodyTag));
+        Assert.That(result[6].Value, Is.EqualTo("<body>"));
+        
+        Assert.That(result[7].Type, Is.EqualTo(TokenType.WhitespaceSequence));
+        
+        Assert.That(result[8].Type, Is.EqualTo(TokenType.ClosingBodyTag));
+        Assert.That(result[8].Value, Is.EqualTo("</body>"));
+        
+        Assert.That(result[9].Type, Is.EqualTo(TokenType.WhitespaceSequence));
+        
+        Assert.That(result[10].Type, Is.EqualTo(TokenType.ClosingHtmlTag));
+        Assert.That(result[10].Value, Is.EqualTo("</html>"));
     }
 }

@@ -32,6 +32,26 @@ internal static class Tokenizer
                 tokens.Add(closingHtmlTagToken);
                 i = closingHtmlTagNewIndex;
             }
+            else if (ParseOpeningHeadTag(input, i) is (Token openingHeadTagToken, int openingHeadTagNewIndex))
+            {
+                tokens.Add(openingHeadTagToken);
+                i = openingHeadTagNewIndex;
+            }
+            else if (ParseClosingHeadTag(input, i) is (Token closingHeadTagToken, int closingHeadTagNewIndex))
+            {
+                tokens.Add(closingHeadTagToken);
+                i = closingHeadTagNewIndex;
+            }
+            else if (ParseOpeningBodyTag(input, i) is (Token openingBodyTagToken, int openingBodyTagNewIndex))
+            {
+                tokens.Add(openingBodyTagToken);
+                i = openingBodyTagNewIndex;
+            }
+            else if (ParseClosingBodyTag(input, i) is (Token closingBodyTagToken, int closingBodyTagNewIndex))
+            {
+                tokens.Add(closingBodyTagToken);
+                i = closingBodyTagNewIndex;
+            }
             else if (ParseInnerHtml(input, i) is (Token innerHtmlToken, int innerHtmlNewIndex))
             {
                 tokens.Add(innerHtmlToken);
@@ -199,12 +219,164 @@ internal static class Tokenizer
             }, result.Item2
         );
     }
+    
+    private static (Token, int)? ParseOpeningHeadTag(char[] input, int i)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if (!IsChar(in input, '<', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'h', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'e', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        if (!IsChar(in input, 'a', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'd', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        (List<Attribute>, int) result = ParseAttributes(sb, input, i);
+        
+        return (
+            new Token()
+            {
+                Type = TokenType.OpeningHeadTag,
+                Value = sb.ToString(),
+                Attributes = result.Item1,
+            }, result.Item2
+        );
+    }
+    
+    private static (Token, int)? ParseClosingHeadTag(char[] input, int i)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if (!IsChar(in input, '<', ref i))
+            return null;
+        sb.Append(input[i++]);
+
+        if (!IsChar(in input, '/', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'h', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'e', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        if (!IsChar(in input, 'a', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'd', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        (List<Attribute>, int) result = ParseAttributes(sb, input, i);
+        
+        return (
+            new Token()
+            {
+                Type = TokenType.ClosingHeadTag,
+                Value = sb.ToString(),
+                Attributes = result.Item1,
+            }, result.Item2
+        );
+    }
+    
+    private static (Token, int)? ParseOpeningBodyTag(char[] input, int i)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if (!IsChar(in input, '<', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'b', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'o', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        if (!IsChar(in input, 'd', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'y', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        (List<Attribute>, int) result = ParseAttributes(sb, input, i);
+        
+        return (
+            new Token()
+            {
+                Type = TokenType.OpeningBodyTag,
+                Value = sb.ToString(),
+                Attributes = result.Item1,
+            }, result.Item2
+        );
+    }
+    
+    private static (Token, int)? ParseClosingBodyTag(char[] input, int i)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if (!IsChar(in input, '<', ref i))
+            return null;
+        sb.Append(input[i++]);
+
+        if (!IsChar(in input, '/', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'b', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'o', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        if (!IsChar(in input, 'd', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'y', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        (List<Attribute>, int) result = ParseAttributes(sb, input, i);
+        
+        return (
+            new Token()
+            {
+                Type = TokenType.ClosingBodyTag,
+                Value = sb.ToString(),
+                Attributes = result.Item1,
+            }, result.Item2
+        );
+    }
 
     private static (Token, int)? ParseInnerHtml(char[] input, int i)
     {
         StringBuilder sb = new StringBuilder();
         
-        while (input[i] != '<' && input[i] != '>')
+        while (i < input.Length - 1 && input[i] != '<' && input[i] != '>')
         {
             sb.Append(input[i]);
             ++i;

@@ -6,5 +6,9 @@ public enum TokenType
     DocTypeTag,
     OpeningHtmlTag,
     ClosingHtmlTag,
-    InnerHtml,
+    OpeningHeadTag,
+    ClosingHeadTag,
+    OpeningBodyTag,
+    ClosingBodyTag,
+    InnerHtml
 }
