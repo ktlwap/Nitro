@@ -2,6 +2,10 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nitro.Parser", "src\Nitro.Parser\Nitro.Parser.csproj", "{5AE69DB9-4A60-442B-BEE5-C1E382F68810}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0A4770C8-43D3-42CC-8F51-E794BF03806F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nitro.Parser.Tests", "Nitro.Parser.Tests\Nitro.Parser.Tests.csproj", "{535EB402-571B-42C8-B893-FEAEB61E05AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +16,12 @@ Global
 		{5AE69DB9-4A60-442B-BEE5-C1E382F68810}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5AE69DB9-4A60-442B-BEE5-C1E382F68810}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5AE69DB9-4A60-442B-BEE5-C1E382F68810}.Release|Any CPU.Build.0 = Release|Any CPU
+		{535EB402-571B-42C8-B893-FEAEB61E05AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{535EB402-571B-42C8-B893-FEAEB61E05AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{535EB402-571B-42C8-B893-FEAEB61E05AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{535EB402-571B-42C8-B893-FEAEB61E05AA}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{535EB402-571B-42C8-B893-FEAEB61E05AA} = {0A4770C8-43D3-42CC-8F51-E794BF03806F}
 	EndGlobalSection
 EndGlobal
