@@ -52,6 +52,26 @@ internal static class Tokenizer
                 tokens.Add(closingBodyTagToken);
                 i = closingBodyTagNewIndex;
             }
+            else if (ParseOpeningDivTag(input, i) is (Token openingDivTagToken, int openingDivTagNewIndex))
+            {
+                tokens.Add(openingDivTagToken);
+                i = openingDivTagNewIndex;
+            }
+            else if (ParseClosingDivTag(input, i) is (Token closingDivTagToken, int closingDivTagNewIndex))
+            {
+                tokens.Add(closingDivTagToken);
+                i = closingDivTagNewIndex;
+            }
+            else if (ParseOpeningButtonTag(input, i) is (Token openingButtonTagToken, int openingButtonTagNewIndex))
+            {
+                tokens.Add(openingButtonTagToken);
+                i = openingButtonTagNewIndex;
+            }
+            else if (ParseClosingButtonTag(input, i) is (Token closingButtonTagToken, int closingButtonTagNewIndex))
+            {
+                tokens.Add(closingButtonTagToken);
+                i = closingButtonTagNewIndex;
+            }
             else if (ParseInnerHtml(input, i) is (Token innerHtmlToken, int innerHtmlNewIndex))
             {
                 tokens.Add(innerHtmlToken);
@@ -65,7 +85,8 @@ internal static class Tokenizer
 
         return tokens;
     }
-
+    
+    #region TAGS_PARSING
     private static (Token, int)? IsAnyWhitespaceSequence(char[] input, int i)
     {
         if (!char.IsWhiteSpace(input[i]))
@@ -371,6 +392,166 @@ internal static class Tokenizer
             }, result.Item2
         );
     }
+    
+    private static (Token, int)? ParseOpeningDivTag(char[] input, int i)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if (!IsChar(in input, '<', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'd', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'i', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        if (!IsChar(in input, 'v', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        (List<Attribute>, int) result = ParseAttributes(sb, input, i);
+        
+        return (
+            new Token()
+            {
+                Type = TokenType.OpeningDivTag,
+                Value = sb.ToString(),
+                Attributes = result.Item1,
+            }, result.Item2
+        );
+    }
+    
+    private static (Token, int)? ParseClosingDivTag(char[] input, int i)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if (!IsChar(in input, '<', ref i))
+            return null;
+        sb.Append(input[i++]);
+
+        if (!IsChar(in input, '/', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'd', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'i', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        if (!IsChar(in input, 'v', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        (List<Attribute>, int) result = ParseAttributes(sb, input, i);
+        
+        return (
+            new Token()
+            {
+                Type = TokenType.ClosingDivTag,
+                Value = sb.ToString(),
+                Attributes = result.Item1,
+            }, result.Item2
+        );
+    }
+    
+    private static (Token, int)? ParseOpeningButtonTag(char[] input, int i)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if (!IsChar(in input, '<', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'b', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'u', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        if (!IsChar(in input, 't', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 't', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'o', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'n', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        (List<Attribute>, int) result = ParseAttributes(sb, input, i);
+        
+        return (
+            new Token()
+            {
+                Type = TokenType.OpeningButtonTag,
+                Value = sb.ToString(),
+                Attributes = result.Item1,
+            }, result.Item2
+        );
+    }
+    
+    private static (Token, int)? ParseClosingButtonTag(char[] input, int i)
+    {
+        StringBuilder sb = new StringBuilder();
+
+        if (!IsChar(in input, '<', ref i))
+            return null;
+        sb.Append(input[i++]);
+
+        if (!IsChar(in input, '/', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'b', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'u', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        if (!IsChar(in input, 't', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 't', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'o', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'n', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        (List<Attribute>, int) result = ParseAttributes(sb, input, i);
+        
+        return (
+            new Token()
+            {
+                Type = TokenType.ClosingButtonTag,
+                Value = sb.ToString(),
+                Attributes = result.Item1,
+            }, result.Item2
+        );
+    }
 
     private static (Token, int)? ParseInnerHtml(char[] input, int i)
     {
@@ -394,6 +575,7 @@ internal static class Tokenizer
             }, i
         );
     }
+    #endregion
 
     #region ATTRIBUTES_PARSING
     private static (List<Attribute>, int) ParseAttributes(StringBuilder sb, char[] input, int i)

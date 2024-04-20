@@ -10,5 +10,9 @@ public enum TokenType
     ClosingHeadTag,
     OpeningBodyTag,
     ClosingBodyTag,
+    OpeningDivTag,
+    ClosingDivTag,
+    OpeningButtonTag,
+    ClosingButtonTag,
     InnerHtml
 }
