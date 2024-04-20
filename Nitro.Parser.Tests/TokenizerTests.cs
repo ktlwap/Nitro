@@ -84,4 +84,25 @@ public class TokenizerTests
         Assert.That(result[4].Type, Is.EqualTo(TokenType.ClosingHtmlTag));
         Assert.That(result[4].Value, Is.EqualTo("</html>"));
     }
+    
+    [Test]
+    public void SimpleDocTypeWithHtmlTagWithLangAttribute()
+    {
+        string source = "<!DOCTYPE html>< html lang=\"en\"></ html>";
+
+        List<Token> result = Tokenizer.Execute(source.ToArray());
+        
+        Assert.That(result.Count, Is.EqualTo(3));
+        Assert.That(result[0].Type, Is.EqualTo(TokenType.DocTypeTag));
+        Assert.That(result[0].Value, Is.EqualTo("<!DOCTYPE html>"));
+        
+        Assert.That(result[1].Type, Is.EqualTo(TokenType.OpeningHtmlTag));
+        Assert.That(result[1].Value, Is.EqualTo("<html lang=\"en\">"));
+        Assert.That(result[1].Attributes, Has.Count.EqualTo(1));
+        Assert.That(result[1].Attributes[0].Type, Is.EqualTo(AttributeType.Lang));
+        Assert.That(result[1].Attributes[0].Value, Is.EqualTo("en"));
+        
+        Assert.That(result[2].Type, Is.EqualTo(TokenType.ClosingHtmlTag));
+        Assert.That(result[2].Value, Is.EqualTo("</html>"));
+    }
 }

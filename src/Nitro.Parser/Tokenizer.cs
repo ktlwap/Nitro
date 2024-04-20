@@ -10,7 +10,7 @@ internal static class Tokenizer
         List<Token> tokens = new List<Token>();
         
         int i = 0;
-        while (i < input.Length)
+        while (i < input.Length - 1)
         {
             if (IsAnyWhitespaceSequence(input, i) is (Token anyWhitespaceSeqToken, int anyWhitespaceSeqNewIndex))
             {
@@ -66,7 +66,8 @@ internal static class Tokenizer
             new Token()
             {
                 Type = TokenType.WhitespaceSequence,
-                Value = sb.ToString()
+                Value = sb.ToString(),
+                Attributes = null,
             }, i
         );
     }
@@ -111,20 +112,15 @@ internal static class Tokenizer
             return null;
         sb.Append(input[i++]);
 
-        while (i < input.Length)
-        {
-            char c = input[i++];
-            sb.Append(c);
-            if (c == '>')
-                break;
-        }
+        (List<Attribute>, int) result = ParseAttributes(sb, input, i);
         
         return (
             new Token()
             {
                 Type = TokenType.DocTypeTag,
-                Value = sb.ToString()
-            }, i
+                Value = sb.ToString(),
+                Attributes = result.Item1,
+            }, result.Item2
         );
     }
 
@@ -152,20 +148,15 @@ internal static class Tokenizer
             return null;
         sb.Append(input[i++]);
 
-        while (i < input.Length)
-        {
-            char c = input[i++];
-            sb.Append(c);
-            if (c == '>')
-                break;
-        }
-
+        (List<Attribute>, int) result = ParseAttributes(sb, input, i);
+        
         return (
             new Token()
             {
                 Type = TokenType.OpeningHtmlTag,
-                Value = sb.ToString()
-            }, i
+                Value = sb.ToString(),
+                Attributes = result.Item1,
+            }, result.Item2
         );
     }
     
@@ -197,20 +188,15 @@ internal static class Tokenizer
             return null;
         sb.Append(input[i++]);
 
-        while (i < input.Length)
-        {
-            char c = input[i++];
-            sb.Append(c);
-            if (c == '>')
-                break;
-        }
-
+        (List<Attribute>, int) result = ParseAttributes(sb, input, i);
+        
         return (
             new Token()
             {
                 Type = TokenType.ClosingHtmlTag,
-                Value = sb.ToString()
-            }, i
+                Value = sb.ToString(),
+                Attributes = result.Item1,
+            }, result.Item2
         );
     }
 
@@ -231,13 +217,135 @@ internal static class Tokenizer
             new Token()
             {
                 Type = TokenType.InnerHtml,
-                Value = sb.ToString()
+                Value = sb.ToString(),
+                Attributes = null,
             }, i
         );
     }
 
+    #region ATTRIBUTES_PARSING
+    private static (List<Attribute>, int) ParseAttributes(StringBuilder sb, char[] input, int i)
+    {
+        // Return directly in case of no additional attributes available.
+        if (IsChar(in input, '>', ref i))
+        {
+            sb.Append(input[i]);
+            return ([], ++i);
+        }
+        
+        // Append blank space before attributes start.
+        sb.Append(' ');
+        
+        List<Attribute> attributes = new List<Attribute>();
+        while (i < input.Length)
+        {
+            if (IsChar(in input, '>', ref i))
+            {
+                sb.Append(input[i]);
+                return (attributes, ++i);
+            }
+            else if (ParseHtmlAttribute(sb, input, i) is (Attribute htmlAttribute, int htmlNewIndex))
+            {
+                attributes.Add(htmlAttribute);
+                i = htmlNewIndex;
+            }
+            else if (ParseLangAttribute(sb, input, i) is (Attribute langAttribute, int langNewIndex))
+            {
+                attributes.Add(langAttribute);
+                i = langNewIndex;
+            }
+            else
+            {
+                throw new Exception();
+            }
+        }
+
+        throw new Exception();
+    }
+    
+    private static (Attribute, int)? ParseHtmlAttribute(StringBuilder sb, char[] input, int i)
+    {
+        if (!IsChar(in input, 'h', ref i))
+            return null;
+        sb.Append(input[i++]);
+
+        if (!IsChar(in input, 't', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'm', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'l', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+
+        // Check if not a different html attribute is meant.
+        if (IsChar(in input, '=', ref i))
+            return null;
+        
+        return (
+            new Attribute()
+            {
+                Type = AttributeType.Html,
+                Value = null,
+            }, i
+        );
+    }
+
+    private static (Attribute, int)? ParseLangAttribute(StringBuilder sb, char[] input, int i)
+    {
+        if (!IsChar(in input, 'l', ref i))
+            return null;
+        sb.Append(input[i++]);
+
+        if (!IsChar(in input, 'a', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'n', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, 'g', ref i, false))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, '=', ref i))
+            return null;
+        sb.Append(input[i++]);
+        
+        if (!IsChar(in input, '"', ref i))
+            return null;
+        sb.Append(input[i++]);
+
+        StringBuilder attrValueBuilder = new StringBuilder();
+        do
+        {
+            if (input[i] == '>')
+                break;
+            
+            attrValueBuilder.Append(input[i++]);
+        } while (input[i] != '"');
+        
+        sb.Append(attrValueBuilder.ToString());
+        
+        // Append closing quote.
+        sb.Append(input[i++]);
+
+        return (
+            new Attribute()
+            {
+                Type = AttributeType.Lang,
+                Value = attrValueBuilder.ToString()
+            }, i
+        );
+    }
+    #endregion
+
     [MethodImpl(MethodImplOptions.AggressiveOptimization)]
-    public static bool IsChar(in char[] input, char expected, ref int index, bool skipWhitespace = true)
+    private static bool IsChar(in char[] input, char expected, ref int index, bool skipWhitespace = true)
     {
         char c = input[index];
 
