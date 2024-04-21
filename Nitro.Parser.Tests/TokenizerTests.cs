@@ -12,7 +12,7 @@ public class TokenizerTests
     {
         string source = "<!DOCTYPE html><html></html>";
 
-        List<Token> result = Tokenizer.Execute(source.ToArray());
+        List<Token> result = Tokenizer.Parse(source.ToArray());
         
         Assert.That(result.Count, Is.EqualTo(3));
         Assert.That(result[0].Type, Is.EqualTo(TokenType.DocTypeTag));
@@ -30,7 +30,7 @@ public class TokenizerTests
     {
         string source = "<!DOCTYPE html></html>";
 
-        List<Token> result = Tokenizer.Execute(source.ToArray());
+        List<Token> result = Tokenizer.Parse(source.ToArray());
         
         Assert.That(result.Count, Is.EqualTo(2));
         Assert.That(result[0].Type, Is.EqualTo(TokenType.DocTypeTag));
@@ -45,7 +45,7 @@ public class TokenizerTests
     {
         string source = "<!DOCTYPE html><html>Hello, World!</html>";
 
-        List<Token> result = Tokenizer.Execute(source.ToArray());
+        List<Token> result = Tokenizer.Parse(source.ToArray());
         
         Assert.That(result.Count, Is.EqualTo(4));
         Assert.That(result[0].Type, Is.EqualTo(TokenType.DocTypeTag));
@@ -66,7 +66,7 @@ public class TokenizerTests
     {
         string source = "<!DOCTYPE html>\n< html>\n</ html>";
 
-        List<Token> result = Tokenizer.Execute(source.ToArray());
+        List<Token> result = Tokenizer.Parse(source.ToArray());
         
         Assert.That(result.Count, Is.EqualTo(5));
         Assert.That(result[0].Type, Is.EqualTo(TokenType.DocTypeTag));
@@ -90,7 +90,7 @@ public class TokenizerTests
     {
         string source = "<!DOCTYPE html>< html lang=\"en\"></ html>";
 
-        List<Token> result = Tokenizer.Execute(source.ToArray());
+        List<Token> result = Tokenizer.Parse(source.ToArray());
         
         Assert.That(result.Count, Is.EqualTo(3));
         Assert.That(result[0].Type, Is.EqualTo(TokenType.DocTypeTag));
@@ -124,7 +124,7 @@ public class TokenizerTests
                         </ html>
                         """;
 
-        List<Token> result = Tokenizer.Execute(source.ToArray());
+        List<Token> result = Tokenizer.Parse(source.ToArray());
         
         Assert.That(result.Count, Is.EqualTo(19));
         Assert.That(result[0].Type, Is.EqualTo(TokenType.DocTypeTag));
