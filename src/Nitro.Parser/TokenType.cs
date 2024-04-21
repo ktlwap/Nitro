@@ -24,5 +24,11 @@ public enum TokenType
     ClosingAreaTag,
     OpeningArticleTag,
     ClosingArticleTag,
+    OpeningAcronymTag,
+    ClosingAcronymTag,
     InnerHtml,
+    ClosingAsideTag,
+    OpeningAsideTag,
+    ClosingAudioTag,
+    OpeningAudioTag
 }

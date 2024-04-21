@@ -9,7 +9,23 @@ internal static class Tokenizer
 {
     private static readonly List<TokenParser> TokenParsers =
     [
-        new WhitespaceSequenceTokenParser(),
+        new OpeningATokenParser(),
+        new ClosingATokenParser(),
+        new OpeningAbbrTokenParser(),
+        new ClosingAbbrTokenParser(),
+        new OpeningAcronymTokenParser(),
+        new ClosingAcronymTokenParser(),
+        new OpeningAddressTokenParser(),
+        new ClosingAddressTokenParser(),
+        new OpeningAreaTokenParser(),
+        new ClosingAreaTokenParser(),
+        new OpeningArticleTokenParser(),
+        new ClosingArticleTokenParser(),
+        new OpeningAsideTokenParser(),
+        new ClosingAsideTokenParser(),
+        new OpeningAudioTokenParser(),
+        new ClosingAudioTokenParser(),
+        
         new DocTypeTokenParser(),
         new OpeningHtmlTokenParser(),
         new ClosingHtmlTokenParser(),
@@ -21,16 +37,8 @@ internal static class Tokenizer
         new ClosingDivTokenParser(),
         new OpeningButtonTokenParser(),
         new ClosingButtonTokenParser(),
-        new OpeningATokenParser(),
-        new ClosingATokenParser(),
-        new OpeningAbbrTokenParser(),
-        new ClosingAbbrTokenParser(),
-        new OpeningAddressTokenParser(),
-        new ClosingAddressTokenParser(),
-        new OpeningAreaTokenParser(),
-        new ClosingAreaTokenParser(),
-        new OpeningArticleTokenParser(),
-        new ClosingArticleTokenParser(),
+        
+        new WhitespaceSequenceTokenParser(),
         new InnerHtmlTokenParser()
     ];
     
