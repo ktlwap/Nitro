@@ -18,5 +18,11 @@ public enum TokenType
     ClosingATag,
     OpeningAbbrTag,
     ClosingAbbrTag,
-    InnerHtml
+    OpeningAddressTag,
+    ClosingAddressTag,
+    OpeningAreaTag,
+    ClosingAreaTag,
+    OpeningArticleTag,
+    ClosingArticleTag,
+    InnerHtml,
 }

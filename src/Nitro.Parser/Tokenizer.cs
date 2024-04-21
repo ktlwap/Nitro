@@ -25,6 +25,12 @@ internal static class Tokenizer
         new ClosingATokenParser(),
         new OpeningAbbrTokenParser(),
         new ClosingAbbrTokenParser(),
+        new OpeningAddressTokenParser(),
+        new ClosingAddressTokenParser(),
+        new OpeningAreaTokenParser(),
+        new ClosingAreaTokenParser(),
+        new OpeningArticleTokenParser(),
+        new ClosingArticleTokenParser(),
         new InnerHtmlTokenParser()
     ];
     
