@@ -8,7 +8,7 @@ internal class OpeningAsideTokenParser : TokenParser
     {
         result = null;
         
-        if (!ParseUtils.IsChar(in input, '<', ref i))
+        if (!ParseUtils.IsChar(in input, '<', ref i, false))
             return false;
         
         StringBuilder sb = new StringBuilder();
@@ -18,19 +18,19 @@ internal class OpeningAsideTokenParser : TokenParser
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 's', ref i))
+        if (!ParseUtils.IsChar(in input, 's', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'i', ref i))
+        if (!ParseUtils.IsChar(in input, 'i', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'd', ref i))
+        if (!ParseUtils.IsChar(in input, 'd', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'e', ref i))
+        if (!ParseUtils.IsChar(in input, 'e', ref i, false))
             return false;
         sb.Append(input[i++]);
         

@@ -175,4 +175,71 @@ public class TokenizerTests
         Assert.That(result[18].Type, Is.EqualTo(TokenType.ClosingHtmlTag));
         Assert.That(result[18].Value, Is.EqualTo("</html>"));
     }
+    
+        [Test]
+    public void ComplexHtml2()
+    {
+        string source = """
+                        <!DOCTYPE html>
+                        <html lang = "en">
+                        </head>
+                        <body>
+                            <div>
+                                <button>Button</button>
+                            </ div>
+                        < /body>
+                        </ html>
+                        """;
+
+        List<Token> result = Tokenizer.Parse(source.ToArray());
+        
+        Assert.That(result.Count, Is.EqualTo(19));
+        Assert.That(result[0].Type, Is.EqualTo(TokenType.DocTypeTag));
+        Assert.That(result[0].Value, Is.EqualTo("<!DOCTYPE html>"));
+        
+        Assert.That(result[1].Type, Is.EqualTo(TokenType.WhitespaceSequence));
+        
+        Assert.That(result[2].Type, Is.EqualTo(TokenType.OpeningHtmlTag));
+        Assert.That(result[2].Value, Is.EqualTo("<html lang=\"en\">"));
+        
+        Assert.That(result[3].Type, Is.EqualTo(TokenType.WhitespaceSequence));
+        
+        Assert.That(result[4].Type, Is.EqualTo(TokenType.ClosingHeadTag));
+        Assert.That(result[4].Value, Is.EqualTo("</head>"));
+        
+        Assert.That(result[5].Type, Is.EqualTo(TokenType.WhitespaceSequence));
+        
+        Assert.That(result[6].Type, Is.EqualTo(TokenType.OpeningBodyTag));
+        Assert.That(result[6].Value, Is.EqualTo("<body>"));
+        
+        Assert.That(result[7].Type, Is.EqualTo(TokenType.WhitespaceSequence));
+        
+        Assert.That(result[8].Type, Is.EqualTo(TokenType.OpeningDivTag));
+        Assert.That(result[8].Value, Is.EqualTo("<div>"));
+        
+        Assert.That(result[9].Type, Is.EqualTo(TokenType.WhitespaceSequence));
+        
+        Assert.That(result[10].Type, Is.EqualTo(TokenType.OpeningButtonTag));
+        Assert.That(result[10].Value, Is.EqualTo("<button>"));
+        
+        Assert.That(result[11].Type, Is.EqualTo(TokenType.InnerHtml));
+        
+        Assert.That(result[12].Type, Is.EqualTo(TokenType.ClosingButtonTag));
+        Assert.That(result[12].Value, Is.EqualTo("</button>"));
+        
+        Assert.That(result[13].Type, Is.EqualTo(TokenType.WhitespaceSequence));
+        
+        Assert.That(result[14].Type, Is.EqualTo(TokenType.ClosingDivTag));
+        Assert.That(result[14].Value, Is.EqualTo("</div>"));
+        
+        Assert.That(result[15].Type, Is.EqualTo(TokenType.WhitespaceSequence));
+        
+        Assert.That(result[16].Type, Is.EqualTo(TokenType.ClosingBodyTag));
+        Assert.That(result[16].Value, Is.EqualTo("</body>"));
+        
+        Assert.That(result[17].Type, Is.EqualTo(TokenType.WhitespaceSequence));
+        
+        Assert.That(result[18].Type, Is.EqualTo(TokenType.ClosingHtmlTag));
+        Assert.That(result[18].Value, Is.EqualTo("</html>"));
+    }
 }

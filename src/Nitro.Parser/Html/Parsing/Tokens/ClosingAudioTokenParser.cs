@@ -8,7 +8,7 @@ internal class ClosingAudioTokenParser : TokenParser
     {
         result = null;
         
-        if (!ParseUtils.IsChar(in input, '<', ref i))
+        if (!ParseUtils.IsChar(in input, '<', ref i, false))
             return false;
         
         StringBuilder sb = new StringBuilder();
@@ -22,19 +22,19 @@ internal class ClosingAudioTokenParser : TokenParser
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'u', ref i))
+        if (!ParseUtils.IsChar(in input, 'u', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'd', ref i))
+        if (!ParseUtils.IsChar(in input, 'd', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'i', ref i))
+        if (!ParseUtils.IsChar(in input, 'i', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'o', ref i))
+        if (!ParseUtils.IsChar(in input, 'o', ref i, false))
             return false;
         sb.Append(input[i++]);
         

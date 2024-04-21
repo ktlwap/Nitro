@@ -8,7 +8,7 @@ internal class ClosingAbbrTokenParser : TokenParser
     {
         result = null;
         
-        if (!ParseUtils.IsChar(in input, '<', ref i))
+        if (!ParseUtils.IsChar(in input, '<', ref i, false))
             return false;
         
         StringBuilder sb = new StringBuilder();
@@ -22,15 +22,15 @@ internal class ClosingAbbrTokenParser : TokenParser
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'b', ref i))
+        if (!ParseUtils.IsChar(in input, 'b', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'b', ref i))
+        if (!ParseUtils.IsChar(in input, 'b', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'r', ref i))
+        if (!ParseUtils.IsChar(in input, 'r', ref i, false))
             return false;
         sb.Append(input[i++]);
         

@@ -8,7 +8,7 @@ internal class OpeningHeadTokenParser : TokenParser
     {
         result = null;
         
-        if (!ParseUtils.IsChar(in input, '<', ref i))
+        if (!ParseUtils.IsChar(in input, '<', ref i, false))
             return false;
         
         StringBuilder sb = new StringBuilder();

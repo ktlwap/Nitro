@@ -8,7 +8,7 @@ internal class OpeningAreaTokenParser : TokenParser
     {
         result = null;
         
-        if (!ParseUtils.IsChar(in input, '<', ref i))
+        if (!ParseUtils.IsChar(in input, '<', ref i, false))
             return false;
         
         StringBuilder sb = new StringBuilder();
@@ -18,15 +18,15 @@ internal class OpeningAreaTokenParser : TokenParser
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'r', ref i))
+        if (!ParseUtils.IsChar(in input, 'r', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'e', ref i))
+        if (!ParseUtils.IsChar(in input, 'e', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'a', ref i))
+        if (!ParseUtils.IsChar(in input, 'a', ref i, false))
             return false;
         sb.Append(input[i++]);
         

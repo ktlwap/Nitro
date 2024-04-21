@@ -8,7 +8,7 @@ internal class OpeningAddressTokenParser : TokenParser
     {
         result = null;
         
-        if (!ParseUtils.IsChar(in input, '<', ref i))
+        if (!ParseUtils.IsChar(in input, '<', ref i, false))
             return false;
         
         StringBuilder sb = new StringBuilder();
@@ -18,27 +18,27 @@ internal class OpeningAddressTokenParser : TokenParser
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'd', ref i))
+        if (!ParseUtils.IsChar(in input, 'd', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'd', ref i))
+        if (!ParseUtils.IsChar(in input, 'd', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'r', ref i))
+        if (!ParseUtils.IsChar(in input, 'r', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'e', ref i))
+        if (!ParseUtils.IsChar(in input, 'e', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 's', ref i))
+        if (!ParseUtils.IsChar(in input, 's', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 's', ref i))
+        if (!ParseUtils.IsChar(in input, 's', ref i, false))
             return false;
         sb.Append(input[i++]);
         

@@ -9,7 +9,7 @@ internal class DocTypeTokenParser : TokenParser
         result = null;
         StringBuilder sb = new StringBuilder();
         
-        if (!ParseUtils.IsChar(in input, '<', ref i))
+        if (!ParseUtils.IsChar(in input, '<', ref i, false))
             return false;
         sb.Append(input[i++]);
         

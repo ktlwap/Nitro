@@ -8,7 +8,7 @@ internal class OpeningAcronymTokenParser : TokenParser
     {
         result = null;
         
-        if (!ParseUtils.IsChar(in input, '<', ref i))
+        if (!ParseUtils.IsChar(in input, '<', ref i, false))
             return false;
         
         StringBuilder sb = new StringBuilder();
@@ -18,27 +18,27 @@ internal class OpeningAcronymTokenParser : TokenParser
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'c', ref i))
+        if (!ParseUtils.IsChar(in input, 'c', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'r', ref i))
+        if (!ParseUtils.IsChar(in input, 'r', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'o', ref i))
+        if (!ParseUtils.IsChar(in input, 'o', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'n', ref i))
+        if (!ParseUtils.IsChar(in input, 'n', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'y', ref i))
+        if (!ParseUtils.IsChar(in input, 'y', ref i, false))
             return false;
         sb.Append(input[i++]);
         
-        if (!ParseUtils.IsChar(in input, 'm', ref i))
+        if (!ParseUtils.IsChar(in input, 'm', ref i, false))
             return false;
         sb.Append(input[i++]);
         
