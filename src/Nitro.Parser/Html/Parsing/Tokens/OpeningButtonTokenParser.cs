@@ -42,7 +42,7 @@ internal class OpeningButtonTokenParser : TokenParser
         
         result = new TokenParseResult()
         {
-            Token = new Parser.Token()
+            Token = new Token()
             {
                 Type = TokenType.OpeningButtonTag,
                 Value = sb.ToString(),

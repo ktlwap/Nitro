@@ -7,7 +7,7 @@ namespace Nitro.Parser;
 
 internal static class Tokenizer
 {
-    private static List<TokenParser> _tokenParsers =
+    private static readonly List<TokenParser> TokenParsers =
     [
         new WhitespaceSequenceTokenParser(),
         new DocTypeTokenParser(),
@@ -21,10 +21,14 @@ internal static class Tokenizer
         new ClosingDivTokenParser(),
         new OpeningButtonTokenParser(),
         new ClosingButtonTokenParser(),
+        new OpeningATokenParser(),
+        new ClosingATokenParser(),
+        new OpeningAbbrTokenParser(),
+        new ClosingAbbrTokenParser(),
         new InnerHtmlTokenParser()
     ];
     
-    private static List<AttributeParser> _attributeParsers =
+    private static readonly List<AttributeParser> AttributeParsers =
     [
         new HtmlAttributeParser(),
         new LangAttributeParser()
@@ -39,7 +43,7 @@ internal static class Tokenizer
         {
             bool parserFound = false;
             
-            foreach (TokenParser parser in _tokenParsers)
+            foreach (TokenParser parser in TokenParsers)
             {
                 if (parser.Parse(input, index, out TokenParseResult? result) && result is not null)
                 {
@@ -83,7 +87,7 @@ internal static class Tokenizer
             
             bool parserFound = false;
 
-            foreach (AttributeParser parser in _attributeParsers)
+            foreach (AttributeParser parser in AttributeParsers)
             {
                 if (parser.Parse(sb, ref input, index, out AttributeParseResult? result) && result is not null)
                 {
@@ -97,6 +101,7 @@ internal static class Tokenizer
             
             if (!parserFound)
             {
+                // TODO: Find a way to handle invalid HTML.
                 Console.WriteLine($"No parser found for input at index {index}.");
             }
         }

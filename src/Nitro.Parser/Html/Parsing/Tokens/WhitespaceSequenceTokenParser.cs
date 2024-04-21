@@ -24,7 +24,7 @@ internal class WhitespaceSequenceTokenParser : TokenParser
         
         result = new TokenParseResult()
         {
-            Token = new Parser.Token()
+            Token = new Token()
             {
                 Type = TokenType.WhitespaceSequence,
                 Value = sb.ToString(),

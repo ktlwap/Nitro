@@ -20,7 +20,7 @@ internal class InnerHtmlTokenParser : TokenParser
         
         result = new TokenParseResult()
         {
-            Token = new Parser.Token()
+            Token = new Token()
             {
                 Type = TokenType.InnerHtml,
                 Value = sb.ToString(),

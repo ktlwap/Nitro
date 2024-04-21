@@ -30,7 +30,7 @@ internal class OpeningDivTokenParser : TokenParser
         
         result = new TokenParseResult()
         {
-            Token = new Parser.Token()
+            Token = new Token()
             {
                 Type = TokenType.OpeningDivTag,
                 Value = sb.ToString(),

@@ -14,5 +14,9 @@ public enum TokenType
     ClosingDivTag,
     OpeningButtonTag,
     ClosingButtonTag,
+    OpeningATag,
+    ClosingATag,
+    OpeningAbbrTag,
+    ClosingAbbrTag,
     InnerHtml
 }

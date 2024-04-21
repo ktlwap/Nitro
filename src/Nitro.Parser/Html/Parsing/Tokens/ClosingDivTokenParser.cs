@@ -34,7 +34,7 @@ internal class ClosingDivTokenParser : TokenParser
         
         result = new TokenParseResult()
         {
-            Token = new Parser.Token()
+            Token = new Token()
             {
                 Type = TokenType.ClosingDivTag,
                 Value = sb.ToString(),

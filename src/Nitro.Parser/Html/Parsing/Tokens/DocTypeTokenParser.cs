@@ -49,7 +49,7 @@ internal class DocTypeTokenParser : TokenParser
 
         result = new TokenParseResult()
         {
-            Token = new Parser.Token()
+            Token = new Token()
             {
                 Type = TokenType.DocTypeTag,
                 Value = sb.ToString(),

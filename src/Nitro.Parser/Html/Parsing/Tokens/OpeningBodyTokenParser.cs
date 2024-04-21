@@ -34,7 +34,7 @@ internal class OpeningBodyTokenParser : TokenParser
         
         result = new TokenParseResult()
         {
-            Token = new Parser.Token()
+            Token = new Token()
             {
                 Type = TokenType.OpeningBodyTag,
                 Value = sb.ToString(),

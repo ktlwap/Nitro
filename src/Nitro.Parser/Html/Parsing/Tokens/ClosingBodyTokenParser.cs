@@ -38,7 +38,7 @@ internal class ClosingBodyTokenParser : TokenParser
         
         result = new TokenParseResult()
         {
-            Token = new Parser.Token()
+            Token = new Token()
             {
                 Type = TokenType.ClosingBodyTag,
                 Value = sb.ToString(),

@@ -38,7 +38,7 @@ internal class ClosingHtmlTokenParser : TokenParser
         
         result = new TokenParseResult()
         {
-            Token = new Parser.Token()
+            Token = new Token()
             {
                 Type = TokenType.ClosingHtmlTag,
                 Value = sb.ToString(),

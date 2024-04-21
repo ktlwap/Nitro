@@ -34,7 +34,7 @@ internal class OpeningHeadTokenParser : TokenParser
         
         result = new TokenParseResult()
         {
-            Token = new Parser.Token()
+            Token = new Token()
             {
                 Type = TokenType.OpeningHeadTag,
                 Value = sb.ToString(),

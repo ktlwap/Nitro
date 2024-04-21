@@ -34,7 +34,7 @@ internal class OpeningHtmlTokenParser : TokenParser
         
         result = new TokenParseResult()
         {
-            Token = new Parser.Token()
+            Token = new Token()
             {
                 Type = TokenType.OpeningHtmlTag,
                 Value = sb.ToString(),

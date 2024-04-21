@@ -38,7 +38,7 @@ internal class ClosingHeadTokenParser : TokenParser
         
         result = new TokenParseResult()
         {
-            Token = new Parser.Token()
+            Token = new Token()
             {
                 Type = TokenType.ClosingHeadTag,
                 Value = sb.ToString(),
