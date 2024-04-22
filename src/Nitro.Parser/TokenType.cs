@@ -34,5 +34,13 @@ public enum TokenType
     ClosingBTag,
     OpeningBTag,
     ClosingBaseTag,
-    OpeningBaseTag
+    OpeningBaseTag,
+    OpeningBdiTag,
+    ClosingBdiTag,
+    ClosingBdoTag,
+    OpeningBdoTag,
+    OpeningBigTag,
+    ClosingBigTag,
+    ClosingBlockQuoteTag,
+    OpeningBlockQuoteTag
 }
