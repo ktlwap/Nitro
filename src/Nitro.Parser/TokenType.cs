@@ -30,5 +30,9 @@ public enum TokenType
     ClosingAsideTag,
     OpeningAsideTag,
     ClosingAudioTag,
-    OpeningAudioTag
+    OpeningAudioTag,
+    ClosingBTag,
+    OpeningBTag,
+    ClosingBaseTag,
+    OpeningBaseTag
 }
